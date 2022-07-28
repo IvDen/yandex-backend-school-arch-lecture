@@ -18,7 +18,7 @@ class BaseMessages(abc.ABC):
         raise NotImplemented
 
     @abc.abstractmethod
-    def echo(self, text:str) -> str:
+    def echo(self, text: str) -> str:
         raise NotImplemented
 
 
@@ -32,7 +32,7 @@ class RegularUser(BaseMessages):
     def stop(self) -> str:
         return 'See u!'
 
-    def echo(self, text:str) -> str:
+    def echo(self, text: str) -> str:
         return f'{text}'
 
 
