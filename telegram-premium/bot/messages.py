@@ -5,33 +5,50 @@ import telegram.ext as tg_ext
 
 
 class BaseMessages(abc.ABC):
-    @property
     @abc.abstractmethod
-    async def start(self) -> str:
+    def start(self) -> str:
         raise NotImplemented
 
-    @property
     @abc.abstractmethod
-    async def help(self) -> str:
+    def help(self) -> str:
         raise NotImplemented
 
-    @property
     @abc.abstractmethod
-    async def echo(self) -> str:
+    def stop(self, text: str) -> str:
+        raise NotImplemented
+
+    @abc.abstractmethod
+    def echo(self, text:str) -> str:
         raise NotImplemented
 
 
 class RegularUser(BaseMessages):
-    @property
-    async def start(self) -> str:
+    def start(self) -> str:
         return 'Hi!'
 
-    @property
-    async def help(self) -> str:
-        return 'Give me a money!'
+    def help(self) -> str:
+        return 'Give me money!'
 
-    @property
-    async def echo(self, update: tg.Update, user: tg.user) -> str:
-        await update.message.reply_html(
-            rf"Hi {user.mention_html()}!",
-        )
+    def stop(self) -> str:
+        return 'See u!'
+
+    def echo(self, text:str) -> str:
+        return f'{text}'
+
+
+class PremiumUser(RegularUser):
+    def start(self) -> str:
+        return 'Hello, Sir!'
+
+    def help(self) -> str:
+        return 'Just buy it!'
+
+    def stop(self) -> str:
+        return 'Good day, Sir!'
+
+
+def get_messages(user: tg.User) -> BaseMessages:
+    if user.is_premium:
+        return PremiumUser()
+    else:
+        return RegularUser()
