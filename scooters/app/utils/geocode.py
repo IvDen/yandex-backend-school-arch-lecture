@@ -2,7 +2,7 @@ import typing as tp
 
 import aiohttp
 
-from app import dto
+from scooters.app import dto
 
 
 class GeocoderClient:
