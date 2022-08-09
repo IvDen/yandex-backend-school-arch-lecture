@@ -4,10 +4,5 @@ WORKDIR /app
 COPY requirements.txt ./
 RUN pip3 install -r requirements.txt
 COPY . .
-#ENTRYPOINT /bin/sh", -c
-#CMD ["sh", "-c", "python3", "telegram-premium/main.py", "--token", "$(cat telegram-premium/secrets/token)"]
-#CMD ["/bin/sh", "-c", "python3", "telegram-premium/main.py", "--token", "$(cat telegram-premium/secrets/token)"]
-#CMD ["/bin/sh", "-c", "ls", "python3", "telegram-premium/main.py", "--token", "$(cat telegram-premium/secrets/token)"]
-#CMD ["python3", "telegram-premium/main.py", "--token", "$(cat telegram-premium/secrets/token)"]
+# why ETRYPOINTS and CMD didnt work in exec mode?
 CMD ls && echo "$PATH" && python3 telegram-premium/main.py --token $(cat telegram-premium/secrets/token)
-#CMD ["ping", "www.ya.ru"]
