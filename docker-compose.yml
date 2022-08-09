@@ -24,23 +24,21 @@ services:
   psql:
     image: postgres:14.4
     volumes:
-#      - todo-mysql-data:/var/lib/mysql
+       - ./db/init:/docker-entrypoint-initdb.d
     environment:
 #      COMPOSE_PROJECT_NAME:
-#      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_pass
-      MYSQL_DATABASE: todos
-      POSTGRES_DB: "habrdb"
-      POSTGRES_USER: "habrpguser"
-      POSTGRES_PASSWORD: "pgpwd4habr"
+      POSTGRES_DB: "yandex_open_lect"
+      POSTGRES_USER: "root_user"
+      POSTGRES_PASSWORD_FILE: /run/secrets/psql_root_pass
+      PGDATA: /var/lib/postgresql/data/pgdata
+      PGPORT: #for changing standard 5432 port to
+    ports:
+      - ${PGPORT}:${PGPORT}
     secrets:
       - psql_root_pass
-    command: > 
+#    command: >
 #      sh -c "set"
-
-volumes:
-  todo-mysql-data:
 
 secrets:
   psql_root_pass:
-    file: ./secrets/mysql/mysql.txt
+    file: ./secrets/psql/root_pass
