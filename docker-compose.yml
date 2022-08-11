@@ -25,13 +25,14 @@ services:
     image: postgres:14.4
     volumes:
        - ./db/init:/docker-entrypoint-initdb.d
+       - psql_volume:/var/lib/postgresql/data
     environment:
 #      COMPOSE_PROJECT_NAME:
       POSTGRES_DB: "yandex_open_lect"
-      POSTGRES_USER: "root_user"
+      POSTGRES_USER: "root"
       POSTGRES_PASSWORD_FILE: /run/secrets/psql_root_pass
       PGDATA: /var/lib/postgresql/data/pgdata
-      PGPORT: #for changing standard 5432 port to
+      PGPORT: #for changing standard 5432 port to, check .env
     ports:
       - ${PGPORT}:${PGPORT}
     secrets:
@@ -42,3 +43,6 @@ services:
 secrets:
   psql_root_pass:
     file: ./secrets/psql/root_pass
+
+volumes:
+  psql_volume:

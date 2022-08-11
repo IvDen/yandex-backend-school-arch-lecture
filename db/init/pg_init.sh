@@ -1,8 +1,27 @@
 #!/bin/bash
 set -e
 
-psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
-	CREATE USER docker;
-	CREATE DATABASE docker;
-	GRANT ALL PRIVILEGES ON DATABASE docker TO docker;
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<EOSQL
+  CREATE DATABASE telegram_bot_db;
+  CREATE DATABASE scooters_db;
+  \c telegram_bot_db;
+  \c scooters_db;
+    CREATE TABLE IF NOT EXISTS scooters
+  (
+    id TEXT,
+    location POINT NOT NULL,
+    "user" TEXT,
+    CONSTRAINT scooters_pk PRIMARY KEY (id)
+  );
+  INSERT INTO scooters(id, location, "user") VALUES
+    ('58c5080f-6726-42f3-a997-f143ad984201', '(37.46829361638372,55.05982583193995)', null),
+    ('8f484690-f92b-417e-9b68-2bd58f1ed700', '(37.05780740487775,55.683570543711426)', null),
+    ('becd1d25-1ab8-4f89-a310-e8177a94093f', '(37.94867354172965,55.313234742670744)', 'df65a1d8-e3c5-452d-a5b0-4e8b8abd55d3'),
+    ('917e9894-0822-4a33-9bfc-5121b937b637', '(37.14825826460845,55.00325180712231)', null),
+    ('5f32966e-87c9-4725-bf18-3d8439044c11', '(37.14117043538411,55.131343164062876)', null),
+    ('45bec7d8-b60e-4fc0-9752-c0b3f6d204ee', '(37.70299881637874,55.75460344872543)', null),
+    ('5898c44f-bfb8-4b6f-a14a-36e5797828b1', '(37.0970577108166,55.644623924666305)', null),
+    ('abfbb1f6-c9b5-47a5-9f4f-0da16763310b', '(37.238075893682485,55.157759477336185)', null),
+    ('0533e457-40f9-468a-ba70-4f1903b55d6b', '(37.26313503696669,55.3111815759084)', null),
+    ('aff866f5-6877-4eea-9c19-b90980dd0d65', '(37.446735940409766,55.702897019510004)', null);
 EOSQL

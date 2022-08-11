@@ -13,4 +13,4 @@ class SecretsReader:
         if os.path.exists(filename):
             with open(filename) as file:
                 return file.read().strip()
-        return None
+        return ValueError(f'Secret{name} not found')

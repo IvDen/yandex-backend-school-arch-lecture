@@ -1,8 +1,8 @@
 import aiohttp
 
-from scooters.app.api.v1 import get_scooters
-from scooters.app.api.v1 import get_scooters_admin
-from scooters.app.context import AppContext
+from app.api.v1 import get_scooters
+from app.api.v1 import get_scooters_admin
+from app.context import AppContext
 
 
 def wrap_handler(handler, context):
