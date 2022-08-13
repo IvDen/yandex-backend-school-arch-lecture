@@ -2,16 +2,11 @@
 import dataclasses
 import asyncpg
 import typing
+from app.dto import Location
 
 @dataclasses.dataclass
 class User:
     id: str
-
-
-@dataclasses.dataclass
-class Location:
-    lat: float
-    lon: float
 
 
 @dataclasses.dataclass
@@ -26,9 +21,5 @@ class Scooter:
 
 
 def from_db(row: asyncpg.Record) -> Scooter:
-    id_str: str = None
-    if row:
-        id_str = row['user']
-    return Scooter(id=row['id'], location=Location(lat=row['location'][0], lon=row['location'][1]), user=User(id=id_str))
-
-
+    return Scooter(id=row['id'], location=Location(lat=row['location'][0], lon=row['location'][1]),
+                   user=User(id=row['user']) if row['user'] else None)

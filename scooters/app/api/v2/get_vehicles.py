@@ -1,11 +1,10 @@
 from aiohttp import web
 from app.context import AppContext
-from app import storage
-from app.models import Scooter
-
-
+from app.utils.vehicles import get_vehicles
+from app.utils import vehicles
+#TODO dto v2 handle scooters to vehicle
 async def handle(request: web.Request, context: AppContext) -> web.Response:
-    scooters = await storage.get_scooters(context)
+    vehicles_handled = await vehicles.get_vehicles(context)
     return web.json_response({'items': [
         to_responce(scooter) for scooter in scooters
     ]})

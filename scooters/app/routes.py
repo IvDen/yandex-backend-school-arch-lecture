@@ -20,10 +20,27 @@ def setup_routes(app: aiohttp.web.Application, ctx: AppContext) -> None:
             ctx,
         ),
     )
+
+    app.router.add_get(
+        '/v2/vehicles',
+        wrap_handler(
+            get_scooters.handle, #TODO
+            ctx,
+        ),
+    )
+
     app.router.add_get(
         '/v1/admin/scooters',
         wrap_handler(
             get_scooters_admin.handle,
+            ctx,
+        ),
+    )
+
+    app.router.add_get(
+        '/v2/admin/vehicles',
+        wrap_handler(
+            get_scooters_admin.handle, #TODO
             ctx,
         ),
     )

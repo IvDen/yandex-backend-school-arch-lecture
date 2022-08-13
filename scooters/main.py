@@ -1,5 +1,7 @@
 import asyncio
 import argparse
+import os
+import sys
 
 import aiohttp
 
@@ -11,7 +13,6 @@ from app import routes
 
 async def create_app(args):
     app = aiohttp.web.Application()
-
     ctx = AppContext(secrets_dir=args.secrets_dir)
 
     app.on_startup.append(ctx.on_startup)

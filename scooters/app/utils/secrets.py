@@ -1,4 +1,5 @@
 import os
+import sys
 import typing
 
 
@@ -13,4 +14,4 @@ class SecretsReader:
         if os.path.exists(filename):
             with open(filename) as file:
                 return file.read().strip()
-        return ValueError(f'Secret{name} not found')
+        raise ValueError(f'Secret {name} not found')
