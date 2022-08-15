@@ -1,12 +1,12 @@
-from aiohttp import web
+from aiohttp import web as aiohttp_web
 from app.context import AppContext
 from app import storage
 from app.models import Scooter
 
 
-async def handle(request: web.Request, context: AppContext) -> web.Response:
+async def handle(request: aiohttp_web.Request, context: AppContext) -> aiohttp_web.Response:
     scooters = await storage.get_scooters(context)
-    return web.json_response({'items': [
+    return aiohttp_web.json_response({'items': [
         to_responce(scooter) for scooter in scooters
     ]})
 

@@ -2,11 +2,18 @@
 import dataclasses
 import asyncpg
 import typing
-from app.dto import Location
+# from app.dto import Location
+
 
 @dataclasses.dataclass
 class User:
     id: str
+
+
+@dataclasses.dataclass
+class Location:
+    lat: float
+    lon: float
 
 
 @dataclasses.dataclass

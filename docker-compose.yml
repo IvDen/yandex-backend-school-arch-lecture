@@ -1,31 +1,26 @@
 #version: ""
 #name: "my_sexy_app"
 services:
-#  my_app:
-#    image: node:12-alpine
-#    ports:
-#      - 3000:3000
-#    working_dir: /app
-#    volumes:
-#      - ./:/app
-#    environment:
-#      COMPOSE_PROJECT_NAME:
-#      MYSQL_USER: root
-#      MYSQL_PASSWORD: secret
-#      MYSQL_DB: todos
-#      MYSQL_HOST: mysql
-#    secrets:
-#      - mysql_root_pass
-#    command: >
-#      sh -c "set
-#      && echo Im running ${COMPOSE_PROJECT_NAME}
-#      && yarn install && yarn run dev"
-#
+  scooters:
+    image: scooters_image
+    build:
+      ./scooters
+    environment:
+      SECRETS_DIR: ./scooters/secrets
+    ports:
+      - 8080:8080
+    working_dir: /app
+    volumes:
+      - scooters_vol:/var/lib/appdata
+      - ./scooters/secrets:/var/lib/secrets
+    command: >
+      sh -c "python3 main.py --secrets_dir /var/lib/secrets/"
+
   psql:
     image: postgres:14.4
     volumes:
        - ./db/init:/docker-entrypoint-initdb.d
-       - psql_volume:/var/lib/postgresql/data
+       - psql_vol:/var/lib/postgresql/data
     environment:
 #      COMPOSE_PROJECT_NAME:
       POSTGRES_DB: "yandex_open_lect"
@@ -37,12 +32,15 @@ services:
       - ${PGPORT}:${PGPORT}
     secrets:
       - psql_root_pass
-#    command: >
-#      sh -c "set"
 
 secrets:
   psql_root_pass:
     file: ./secrets/psql/root_pass
+  scooters_secrets_ya_geocoder_api_key:
+    file: ./scooters/secrets/ya_geocoder_api_key
+  scooters_secrets_postgres_dsn:
+    file: ./scooters/secrets/postgres_dsn
 
 volumes:
-  psql_volume:
+  psql_vol:
+  scooters_vol:
