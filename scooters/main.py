@@ -5,11 +5,14 @@ import sys
 
 import aiohttp
 
-
 from app.context import AppContext
 from app import routes
 
 
+# TODO what about psycopg3 in req.txt?
+# TODO rework from asyncpg to psycopg3
+# TODO SQLAlch for query building?
+# TODO SQLAlch for ORM
 
 async def create_app(args):
     app = aiohttp.web.Application()
@@ -34,8 +37,8 @@ def main():
     args = parse_args()
 
     app = asyncio.get_event_loop().run_until_complete(create_app(args))
-
     aiohttp.web.run_app(app)
+    # asyncio.run(create_app(args))
 
 
 if __name__ == '__main__':

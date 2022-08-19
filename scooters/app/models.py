@@ -30,3 +30,7 @@ class Scooter:
 def from_db(row: asyncpg.Record) -> Scooter:
     return Scooter(id=row['id'], location=Location(lat=row['location'][0], lon=row['location'][1]),
                    user=User(id=row['user']) if row['user'] else None)
+
+
+def from_db_raw_test(row: asyncpg.Record) -> int: #TODO
+    return row['test']

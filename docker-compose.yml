@@ -35,7 +35,7 @@ services:
 
 secrets:
   psql_root_pass:
-    file: ./secrets/psql/root_pass
+    file: db/secrets/psql/root_pass
   scooters_secrets_ya_geocoder_api_key:
     file: ./scooters/secrets/ya_geocoder_api_key
   scooters_secrets_postgres_dsn:
