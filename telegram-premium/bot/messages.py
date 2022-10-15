@@ -22,6 +22,7 @@ class BaseMessages(abc.ABC):
         raise NotImplemented
 
 
+
 class RegularUser(BaseMessages):
     def start(self) -> str:
         return 'Hi!'

@@ -6,6 +6,8 @@ from app.api.v2 import get_scooters as v2_get_scooters
 from app.api.v2 import get_scooters_admin as v2_get_scooters_admin
 from app.api import root_handler
 
+from app.api.v1 import get_scooters
+from app.api.v1 import get_scooters_admin
 from app.context import AppContext
 
 

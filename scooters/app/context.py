@@ -1,5 +1,6 @@
 import asyncpg
 import typing
+
 from app.utils import secrets
 from app.utils import geocode
 

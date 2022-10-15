@@ -1,4 +1,5 @@
 import typing
+
 import time
 import asyncio
 
@@ -11,6 +12,7 @@ from app.utils import geocode
 async def _enrich_address(scooters: typing.List[dto.Scooter_dto], client: geocode.GeocoderClient) -> None:
     futures = [client.get_address(scooter.location) for scooter in scooters]
     result = await asyncio.gather(*futures)
+
     for scooter, address in zip(scooters, result):
         scooter.address = address
 

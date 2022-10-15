@@ -20,3 +20,4 @@ def to_responce(scooter: Scooter) -> dict:
         },
         'user': scooter.user.id if scooter.user else None
     }
+

@@ -6,6 +6,7 @@ import telegram.ext as tg_ext
 from . import messages
 
 
+
 class BaseHandler(abc.ABC):
     def __init__(self) -> None:
         self.user: tp.Optional[tg.User] = None

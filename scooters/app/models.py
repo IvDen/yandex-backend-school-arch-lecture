@@ -5,6 +5,7 @@ import typing
 # from app.dto import Location
 
 
+
 @dataclasses.dataclass
 class User:
     id: str

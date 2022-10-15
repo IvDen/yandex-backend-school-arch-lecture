@@ -1,7 +1,9 @@
 import argparse
 import logging
+import argparse
 
 import telegram.ext as tg_ext
+
 
 from bot import handlers
 
