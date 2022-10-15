@@ -1,36 +1,37 @@
-from __future__ import annotations
-
-import typing as tp
+# from __future__ import annotations
 import dataclasses
-
 import asyncpg
+import typing
+# from app.dto import Location
 
-from app import dto
 
 
 @dataclasses.dataclass
 class User:
     id: str
 
-    @classmethod
-    def from_db(cls, user_id: tp.Optional[str]) -> User:
-        if user_id:
-            return User(id=user_id)
-        return None
+
+@dataclasses.dataclass
+class Location:
+    lat: float
+    lon: float
 
 
 @dataclasses.dataclass
 class Scooter:
     id: str
-    location: dto.Location
-    user: tp.Optional[User] = None
+    location: Location
+    user: typing.Optional[User] = None
 
-    @classmethod
-    def from_db(cls, row: asyncpg.Record) -> Scooter:
-        return cls(
-            id=row['id'],
-            location=dto.Location(
-                lat=row['location'][0], lon=row['location'][1]
-            ),
-            user=User.from_db(row['user']),
-        )
+    # @classmethod #убрал чтобы без модуля __future__
+    # def from_db(cls, row: asyncpg.Record) -> Scooter:
+    #     pass
+
+
+def from_db(row: asyncpg.Record) -> Scooter:
+    return Scooter(id=row['id'], location=Location(lat=row['location'][0], lon=row['location'][1]),
+                   user=User(id=row['user']) if row['user'] else None)
+
+
+def from_db_raw_test(row: asyncpg.Record) -> int: #TODO
+    return row['test']

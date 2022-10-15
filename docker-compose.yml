@@ -1,0 +1,46 @@
+#version: ""
+#name: "my_sexy_app"
+services:
+  scooters:
+    image: scooters_image
+    build:
+      ./scooters
+    environment:
+      SECRETS_DIR: ./scooters/secrets
+    ports:
+      - 8080:8080
+    working_dir: /app
+    volumes:
+      - scooters_vol:/var/lib/appdata
+      - ./scooters/secrets:/var/lib/secrets
+    command: >
+      sh -c "python3 main.py --secrets_dir /var/lib/secrets/"
+
+  psql:
+    image: postgres:14.4
+    volumes:
+       - ./db/init:/docker-entrypoint-initdb.d
+       - psql_vol:/var/lib/postgresql/data
+    environment:
+#      COMPOSE_PROJECT_NAME:
+      POSTGRES_DB: "yandex_open_lect"
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD_FILE: /run/secrets/psql_root_pass
+      PGDATA: /var/lib/postgresql/data/pgdata
+      PGPORT: #for changing standard 5432 port to, check .env
+    ports:
+      - ${PGPORT}:${PGPORT}
+    secrets:
+      - psql_root_pass
+
+secrets:
+  psql_root_pass:
+    file: db/secrets/psql/root_pass
+  scooters_secrets_ya_geocoder_api_key:
+    file: ./scooters/secrets/ya_geocoder_api_key
+  scooters_secrets_postgres_dsn:
+    file: ./scooters/secrets/postgres_dsn
+
+volumes:
+  psql_vol:
+  scooters_vol:

@@ -1,22 +1,12 @@
-from __future__ import annotations
-
-import typing as tp
-
+import typing
 import dataclasses
-
-from app import models
-
-
-@dataclasses.dataclass
-class Location:
-    lat: float
-    lon: float
+from app.models import Scooter
 
 
 @dataclasses.dataclass
-class Scooter(models.Scooter):
-    address: tp.Optional[str] = None
+class Scooter_dto(Scooter):
+    address: typing.Optional[str] = None
 
-    @classmethod
-    def from_model(cls, scooter: models.Scooter) -> Scooter:
-        return cls(id=scooter.id, location=scooter.location, user=scooter.user)
+
+def from_model(scooter: Scooter) -> Scooter_dto:
+    return Scooter_dto(id=scooter.id, location=scooter.location, user=scooter.user)

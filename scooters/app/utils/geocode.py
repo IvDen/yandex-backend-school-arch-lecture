@@ -2,7 +2,8 @@ import typing as tp
 
 import aiohttp
 
-from app import dto
+# from app import dto
+from app import models
 
 
 class GeocoderClient:
@@ -14,7 +15,7 @@ class GeocoderClient:
         self.api_key = api_key
         self.base_url = base_url
 
-    async def get_address(self, location: dto.Location) -> tp.Optional[str]:
+    async def get_address(self, location: models.Location) -> tp.Optional[str]:
         async with aiohttp.ClientSession(self.base_url) as session:
             async with session.get(
                 '/1.x/',

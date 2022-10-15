@@ -5,15 +5,14 @@ from app.models import Scooter
 
 
 async def handle(request: aiohttp_web.Request, context: AppContext) -> aiohttp_web.Response:
-    scooters = await storage.get_scooters(context)
+    print("______root_handle")
+    result = await storage.get_data(context)
     return aiohttp_web.json_response({'items': [
-        to_responce(scooter) for scooter in scooters
+        to_responce(item) for item in result
     ]})
 
 
-def to_responce(scooter: Scooter) -> dict:
+def to_responce(item: int) -> dict:
     return {
-        'id': scooter.id,
-        'location': [scooter.location.lon, scooter.location.lat],
-        'user': scooter.user.id if scooter.user else None
+        'int': item
     }
